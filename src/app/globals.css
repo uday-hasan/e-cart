@@ -33,15 +33,16 @@
 
   .dark {
     /* --background: 222.2 84% 4.9%; */
-    --background: 0 15% 11%;
-    --foreground: 0 6% 77%;
-    /* --foreground: 210 40% 98%; */
+    --background: 0 15% 11%; /* Main Background*/
+    --foreground: 0 6% 77%;  /* Main Text */
+    --primary: 234 55% 69%;  /*Button Default BG*/
+    --primary-foreground: 0 0% 99.02%; /*Button Default Text*/
+    
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 234 55% 69%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* --primary-foreground: 222.2 47.4% 11.2%; */
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;

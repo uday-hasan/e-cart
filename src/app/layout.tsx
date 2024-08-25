@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Header/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const inter = Raleway({ weight: ["400"], subsets: ["latin"] });
 
@@ -18,11 +19,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        layout: {
+          socialButtonsPlacement: "bottom",
+          shimmer: true,
+        },
+      }}
+    >
       <html lang="en">
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="dark">
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
           </ThemeProvider>
         </body>

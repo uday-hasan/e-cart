@@ -8,7 +8,9 @@ const NavItem = ({ item }: { item: { title: string; href: string } }) => {
   return (
     <Link
       href={item.href}
-      className={`${pathName === item.href && "text-primary"}`}
+      className={`${
+        pathName === item.href && "text-primary"
+      } opacity-0 nav-item-sta`}
     >
       {item.title}
     </Link>
