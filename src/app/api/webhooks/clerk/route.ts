@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { createUser } from "@/lib/database/crud/user.actions";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -58,18 +59,12 @@ export async function POST(req: Request) {
   switch (eventType) {
     case "user.created":
       const { email_addresses, first_name, last_name } = evt.data;
-      const res = await fetch("http://localhost:3000/api/user/create-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: first_name + " " + last_name,
-          email: email_addresses[0].email_address,
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
+      const userData = {
+        email: email_addresses[0].email_address!,
+        name: first_name + " " + last_name,
+      };
+      const aa = await createUser(userData);
+      console.log(aa);
       break;
 
     default:
