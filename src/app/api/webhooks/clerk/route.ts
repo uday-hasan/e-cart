@@ -55,6 +55,26 @@ export async function POST(req: Request) {
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
   console.log("Webhook body:", body);
   console.log({ evt });
+  switch (eventType) {
+    case "user.created":
+      const { email_addresses, first_name, last_name } = evt.data;
+      const res = await fetch("http://localhost:3000/api/user/create-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: first_name + " " + last_name,
+          email: email_addresses[0].email_address,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      break;
+
+    default:
+      break;
+  }
 
   return new Response("", { status: 200 });
 }
