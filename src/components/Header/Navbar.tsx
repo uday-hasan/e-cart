@@ -99,6 +99,7 @@ const Navbar = () => {
             <Button asChild>
               <Link href={"/dashboard/profile"}>Dashboard</Link>
             </Button>
+            <SignOutButton />
           </SignedIn>
 
           <SignedOut>
