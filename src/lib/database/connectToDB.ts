@@ -19,7 +19,7 @@ export const connectToDB = async () => {
     }
 
     cache.promise =
-      cache.promise || mongoose.connect(URL!, { dbName: "Drone Factory" });
+      cache.promise || mongoose.connect(URL!, { dbName: "DroneFactory" });
 
     cache.connection = await cache.promise;
     return cache.connection;

@@ -1,31 +1,27 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
 import { connectToDB } from "../connectToDB";
 import { User } from "../db_model/user.models";
 
 export const createUser = async ({
   email,
   name,
+  clerkId,
 }: {
   email: string;
   name: string;
+  clerkId: string;
 }) => {
   try {
-    const { userId } = auth();
-    if (!userId) {
-      return {
-        message: "Unauthorized",
-        success: false,
-      };
-    }
     await connectToDB();
-    const userData = { name, email, clerkId: userId };
+    const userData = { name, email, clerkId };
     const newUser = await User.create(userData);
     return {
       message: "User created",
       success: true,
       user: newUser,
     };
-  } catch (error) {}
+  } catch (error) {
+    console.log({ error });
+  }
 };
