@@ -1,7 +1,8 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
-import { WebhookEvent } from "@clerk/nextjs/server";
+import { clerkClient, WebhookEvent } from "@clerk/nextjs/server";
 import { createUser } from "@/lib/database/crud/user.actions";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -52,22 +53,23 @@ export async function POST(req: Request) {
   // Do something with the payload
   // For this guide, you simply log the payload to the console
   const eventType = evt.type;
-  switch (eventType) {
-    case "user.created":
-      const { email_addresses, first_name, last_name, id } = evt.data;
-      const userData = {
-        email: email_addresses[0].email_address!,
-        name: first_name + " " + last_name,
-        clerkId: id,
-      };
-      const aa = await createUser(userData);
-      return {
-        user: aa,
-        success: true,
-      };
-
-    default:
-      break;
+  if (eventType === "user.created") {
+    const { email_addresses, first_name, last_name, id } = evt.data;
+    const userData = {
+      email: email_addresses[0].email_address!,
+      name: first_name + " " + last_name,
+      clerkId: id,
+    };
+    const aa = await createUser(userData);
+    if (aa) {
+      await clerkClient.users.updateUserMetadata(id, {
+        publicMetadata: {
+          isAdmin: false,
+          userId: aa.user._id,
+        },
+      });
+    }
+    return NextResponse.json({ user: aa });
   }
 
   return new Response("", { status: 200 });

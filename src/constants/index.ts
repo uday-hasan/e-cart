@@ -1,14 +1,28 @@
+class Create {
+  title: string;
+  href: string;
+  constructor(title: string, href: string) {
+    this.title = title;
+    this.href = href;
+  }
+}
+
+class CreateHref extends Create {
+  isAdmin: boolean;
+  constructor(title: string, href: string, isAdmin: boolean) {
+    super(title, href);
+    this.isAdmin = isAdmin;
+    this.href = `/dashboard/${isAdmin ? "admin" : "user"}/${href}`;
+  }
+}
 export const navigationItems = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "Products",
-    href: "/products",
-  },
-  {
-    title: "Support",
-    href: "/support",
-  },
+  new Create("Home", "/"),
+  new Create("Products", "/products"),
+  new Create("Support", "support"),
+] as const;
+
+export const adminNavigationItems = [
+  new CreateHref("Profile", "profile", true),
+  new CreateHref("Manage Product", "manage-product", true),
+  new CreateHref("Order Managege", "order-manage", true),
 ] as const;

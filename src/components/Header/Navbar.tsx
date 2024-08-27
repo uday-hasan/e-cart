@@ -17,6 +17,7 @@ import MobileNav from "./MobileNav";
 import { Loader } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Dashboard from "../dashboard/Dashboard";
 
 const Navbar = () => {
   const timeline = gsap.timeline();
@@ -36,38 +37,18 @@ const Navbar = () => {
         stagger: {
           amount: 0.5,
           grid: [2, 1],
+          axis: "y",
         },
       },
       {
-        y: 0,
+        y: 10,
         duration: 1,
         opacity: 1,
         stagger: {
           amount: 0.5,
           grid: [2, 1],
+          axis: "y",
         },
-      }
-    );
-    // authButtonSelect.forEach((item) => {
-    //   timeline.to(item, {
-    //     y: 20,
-    //   });
-    // });
-    timeline.to(".cc", {
-      y: 20,
-      delay: 2,
-      duration: 1,
-      opacity: 0,
-    });
-    timeline.fromTo(
-      "#auth-button",
-      {
-        opacity: 0,
-        duration: 0.5,
-      },
-      {
-        opacity: 1,
-        duration: 0.5,
       }
     );
   }, []);
@@ -96,10 +77,7 @@ const Navbar = () => {
 
         <ClerkLoaded>
           <SignedIn>
-            <Button asChild>
-              <Link href={"/dashboard/profile"}>Dashboard</Link>
-            </Button>
-            <SignOutButton />
+            <Dashboard />
           </SignedIn>
 
           <SignedOut>

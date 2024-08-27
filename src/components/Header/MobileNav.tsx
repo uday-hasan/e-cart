@@ -6,6 +6,7 @@ import NavItem from "./NavItem";
 import { Separator } from "../ui/separator";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { Button } from "../ui/button";
+import Dashboard from "../dashboard/Dashboard";
 
 const MobileNav = () => {
   return (
@@ -16,7 +17,7 @@ const MobileNav = () => {
       <SheetContent className="max-w-[200px] flex flex-col justify-between">
         <nav className="flex flex-col gap-4">
           {navigationItems.map((item) => (
-            <div key={item.href} className="flex flex-col">
+            <div key={item.href} className="flex flex-col ">
               <NavItem item={item} />
               <Separator className="border-primary" />
             </div>
@@ -24,7 +25,7 @@ const MobileNav = () => {
         </nav>
         <div>
           <SignedIn>
-            <Button>Dashboard</Button>
+            <Dashboard />
           </SignedIn>
           <SignedOut>
             <SignInButton></SignInButton>

@@ -1,4 +1,14 @@
-import { model, models, Schema } from "mongoose";
+import { model, models, ObjectId, Schema } from "mongoose";
+
+export interface UUser {
+  name: string;
+  email: string;
+  isAdmin?: boolean;
+  clerkId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  _id: ObjectId;
+}
 
 const userSchema = new Schema(
   {

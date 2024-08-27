@@ -15,6 +15,7 @@ const URL = process.env.MONGO_URL;
 export const connectToDB = async () => {
   try {
     if (cache.connection) {
+      console.log("DB connected");
       return cache.connection;
     }
 
@@ -22,6 +23,7 @@ export const connectToDB = async () => {
       cache.promise || mongoose.connect(URL!, { dbName: "DroneFactory" });
 
     cache.connection = await cache.promise;
+    console.log("DB connected");
     return cache.connection;
   } catch (error) {
     console.log({ error });
