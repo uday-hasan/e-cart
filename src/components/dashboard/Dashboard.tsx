@@ -28,7 +28,7 @@ const Dashboard = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {adminNavigationItems.map((item) => (
-          <Link href={item.href} className="cursor-pointer">
+          <Link key={item.href} href={item.href} className="cursor-pointer">
             <DropdownMenuItem className="cursor-pointer">
               {item.title}
             </DropdownMenuItem>

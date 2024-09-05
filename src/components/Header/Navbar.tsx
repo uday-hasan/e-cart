@@ -53,7 +53,7 @@ const Navbar = () => {
     );
   }, []);
   return (
-    <header className="border-2 flex justify-around py-4 px-8 items-center static top-0">
+    <header className="border-2 flex justify-around  px-8 py-4 items-center sm:items-start static top-0">
       {/*  Site Name with Link to home page*/}
       <section id="nav-sec-title" className="opacity-0">
         <Button asChild variant={"outline"}>

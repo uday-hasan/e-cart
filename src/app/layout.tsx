@@ -5,7 +5,8 @@ import Navbar from "@/components/Header/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const inter = Raleway({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="dark">
             {/* <Navbar /> */}
             {children}
+            <ToastContainer />
           </ThemeProvider>
         </body>
       </html>

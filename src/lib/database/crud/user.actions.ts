@@ -28,10 +28,8 @@ export const createUser = async ({
 
 export const getUser = async (clerkId: string) => {
   try {
-    console.log("Calling get user");
     await connectToDB();
     const user = await User.findOne({ clerkId });
-    console.log({ user });
     return JSON.parse(JSON.stringify(user));
   } catch (errorMM) {
     console.log({ errorMM });
