@@ -17,13 +17,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectContent,
 } from "../ui/select";
-import { SelectContent } from "@radix-ui/react-select";
-import { ProductCategory } from "@/constants";
-import ImageUpload from "../dashboard/admin/ImageUpload";
 import { z } from "zod";
-import { productFormSchema } from "./AddProductForm";
 import { Textarea } from "../ui/textarea";
+import { productFormSchema } from "@/lib/zod-schema/productFormSchema";
 
 interface Props {
   name: keyof z.infer<typeof productFormSchema>;
@@ -32,7 +30,7 @@ interface Props {
   control: Control<any>;
   fieldType: FormFieldType;
   placeholder?: string;
-  selectItems?: string[];
+  selectItems?: { [key: string]: string };
 }
 
 const RenderField = ({ field, props }: { field: any; props: Props }) => {
@@ -59,9 +57,9 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
           </FormControl>
 
           <SelectContent className="bg-background border p-2">
-            {selectItems?.map((item) => (
-              <SelectItem value={item} key={item}>
-                {item}
+            {Object.keys(selectItems!).map((key) => (
+              <SelectItem value={key}>
+                {selectItems && selectItems[key]}
               </SelectItem>
             ))}
           </SelectContent>
@@ -69,8 +67,6 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
       );
     case FormFieldType.TEXTAREA:
       return <Textarea placeholder={placeholder} {...field} />;
-    // case FormFieldType.SKELETON:
-    //   return <ImageUpload value={field.value} onChange={field.onChange} />;
 
     default:
       return null;

@@ -27,23 +27,15 @@ export const adminNavigationItems = [
   new CreateHref("Order Managege", "order-manage", true),
 ] as const;
 
-// export const ProductCategory = [
-//   "Motor",
-//   "Propeller",
-//   "Remote",
-//   "Battery",
-//   "Complete Drone",
-// ] as const;
-
 export const ProductCategory = {
-  Motor: "Motor",
-  Propeller: "Propeller",
-  Remote: "Remote",
-  Battery: "Battery",
+  Shirt: "Shirt",
+  Pant: "Pant",
+  TShirt: "T-Shirt",
+  Short: "Short",
 } as const;
-export enum ProdCategory {
-  Motor = "Motor",
-  Propeller = "Propeller",
-  Remote = "Remote",
-  Battery = "Battery",
-}
+
+export const SortItems = {
+  None: "None",
+  Asc: "Asc",
+  Dec: "Dec",
+} as const;

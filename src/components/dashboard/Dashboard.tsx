@@ -19,9 +19,11 @@ const Dashboard = () => {
 
   return (
     <DropdownMenu>
-      <Button asChild variant={"outline"}>
-        <DropdownMenuTrigger>Dashboard</DropdownMenuTrigger>
-      </Button>
+      <DropdownMenuTrigger>
+        <Button asChild variant={"outline"}>
+          Dashboard
+        </Button>
+      </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>
           {isAdmin ? "ADMIN PANEL" : "WELCOME"}

@@ -21,7 +21,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-import AddProductForm from "@/components/forms/AddProductForm";
+import ManageProductForm from "@/components/forms/ManageProductForm";
 
 export enum FormFieldType {
   TEXT = "text",
@@ -40,7 +40,7 @@ const AddProduct = () => {
         <AlertDialogHeader>
           {/* <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle> */}
           <AlertDialogDescription>
-            <AddProductForm type="add" title="Add new product" />
+            <ManageProductForm type="add" title="Add new product" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         {/* <AlertDialogFooter>

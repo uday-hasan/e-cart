@@ -13,7 +13,6 @@ if (!cache) {
 const URL = process.env.MONGO_URL;
 
 export const connectToDB = async () => {
-  console.log(URL);
   try {
     if (cache.connection) {
       return cache.connection;
@@ -25,6 +24,6 @@ export const connectToDB = async () => {
     cache.connection = await cache.promise;
     return cache.connection;
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 };

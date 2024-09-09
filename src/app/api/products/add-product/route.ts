@@ -1,4 +1,3 @@
-import { productFormSchema } from "@/components/forms/AddProductForm";
 import { connectToDB } from "@/lib/database/connectToDB";
 import { Products } from "@/lib/database/db_model/product.models";
 import { auth } from "@clerk/nextjs/server";
@@ -30,7 +29,7 @@ export const POST = async (req: Request, res: Response) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.log({ errorRouteAddProduct: error });
     return NextResponse.json({ error });
   }
 };

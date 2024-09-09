@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "react-toastify";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useProductContext } from "@/context/ProductContext";
 
 const DeleteButton = ({ productId }: { productId: string }) => {
-  const [loading, setLoading] = useState(false);
+  const { deleteProduct, loading, setLoading } = useProductContext();
   const [open, setOpen] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -24,16 +25,7 @@ const DeleteButton = ({ productId }: { productId: string }) => {
   const handleDelete = async (id: string) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `/api/products/delete-product?productId=${productId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
-      const { success, message } = await res.json();
+      const { success, message } = await deleteProduct(id);
 
       if (success) {
         toast.success(message, {

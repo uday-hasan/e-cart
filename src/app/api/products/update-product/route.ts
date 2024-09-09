@@ -20,7 +20,7 @@ export const PUT = async (request: NextRequest) => {
     const productId = req.get("product-id");
     const update = await Products.updateOne({ _id: productId }, data.values);
     if (update.acknowledged) {
-      revalidatePath("/(main)/dashboard/admin/manage-product/update");
+      // revalidatePath("/(main)/dashboard/admin/manage-product/update");
       return NextResponse.json({
         message: "Product updated successfully",
         success: true,

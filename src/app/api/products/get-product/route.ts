@@ -1,6 +1,5 @@
 import { connectToDB } from "@/lib/database/connectToDB";
 import { Products } from "@/lib/database/db_model/product.models";
-import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
@@ -13,11 +12,23 @@ export const GET = async (request: NextRequest) => {
       const products = await Products.findOne({ _id: String(productId) });
       return NextResponse.json({ products });
     }
+    const limit = req.get("limit");
+    const skip = req.get("skip");
+    const productCategory = req.has("category") && req.getAll("category");
+    const res = productCategory
+      ? await Products.find({ productCategory })
+          .limit(Number(limit))
+          .skip(Number(skip) || 0)
+      : await Products.find({})
+          .limit(Number(limit))
+          .skip(Number(skip) || 0);
 
-    const res = await Products.find({});
-    return NextResponse.json({ products: res });
+    const count = productCategory
+      ? await Products.find({ productCategory }).countDocuments()
+      : await Products.countDocuments();
+    return NextResponse.json({ products: res, count });
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
     return NextResponse.json({ products: null });
   }
 };

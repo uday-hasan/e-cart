@@ -20,3 +20,5 @@ export const productFormSchema = z.object({
     .string()
     .nonempty({ message: "Product description is required" }),
 });
+
+export type productFormSchema = z.infer<typeof productFormSchema>;

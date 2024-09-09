@@ -7,6 +7,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProductContext from "@/context/ProductContext";
 const inter = Raleway({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -32,9 +33,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="dark">
-            {/* <Navbar /> */}
-            {children}
-            <ToastContainer />
+            <ProductContext>
+              {/* <Navbar /> */}
+              {children}
+              <ToastContainer />
+            </ProductContext>
           </ThemeProvider>
         </body>
       </html>

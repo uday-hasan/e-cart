@@ -20,8 +20,8 @@ import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { toast } from "react-toastify";
 import { ProductInterface } from "@/lib/database/db_model/product.models";
 import { productFormSchema } from "@/lib/zod-schema/productFormSchema";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+import { useProductContext } from "@/context/ProductContext";
 
 interface ImageInfo {
   asset_folder: string;
@@ -32,7 +32,7 @@ interface ImageInfo {
   format: "jpg" | "png" | "jpeg";
 }
 
-const AddProductForm = ({
+const ManageProductForm = ({
   type,
   title,
   productId,
@@ -45,9 +45,10 @@ const AddProductForm = ({
   const [image, setImage] = useState<ImageInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState<ProductInterface | null>(null);
+  const { createProduct, updateProduct } = useProductContext();
   const [initialValue, setInitialValue] = useState({
     productName: "",
-    productCategory: "Motor" as keyof typeof ProductCategory,
+    productCategory: "Shirt" as keyof typeof ProductCategory,
     productQuantity: 1,
     productPrice: 1,
     productCompany: "",
@@ -86,7 +87,7 @@ const AddProductForm = ({
               productDescription: products.productDescription,
             };
             setInitialValue(updatedValues);
-            reset(updatedValues); // Reset the form with the new values
+            reset(updatedValues);
             setImage({
               public_id: products.public_id,
               asset_folder: products.asset_folder || "",
@@ -105,21 +106,11 @@ const AddProductForm = ({
     }
   }, [type, productId, reset]);
 
-  async function onSubmitHandler(values: z.infer<typeof productFormSchema>) {
+  async function onSubmitHandler(values: productFormSchema) {
     setLoading(true);
     try {
       if (type === "update") {
-        const res = await fetch(
-          `/api/products/update-product?product-id=${productId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ values }),
-          }
-        );
-        const data = await res.json();
+        const data = await updateProduct(productId!, values);
         if (data.success && !loading) {
           router.push(`/dashboard/admin/manage-product/update`);
           toast.success(data.message, {
@@ -132,17 +123,8 @@ const AddProductForm = ({
         }
         return;
       }
-      const res = await fetch(
-        `http://localhost:3000/api/products/add-product`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
-      const data = await res.json();
+
+      const data = await createProduct(values);
       if (data.success) {
         form.reset();
         setImage(null);
@@ -187,7 +169,7 @@ const AddProductForm = ({
               control={form.control}
               label="Select Product Category"
               fieldType={FormFieldType.SELECT}
-              selectItems={Object.keys(ProductCategory)}
+              selectItems={ProductCategory}
             />
             <CustomForm
               name="productPrice"
@@ -235,7 +217,6 @@ const AddProductForm = ({
                       options={{ multiple: false }}
                       onSuccess={(results: any) => {
                         if (results.event === "success") {
-                          console.log({ results: results.info });
                           if (results.info.bytes > 1000000) {
                             toast.error("Image must be less than or equal 1MB");
                             return;
@@ -280,8 +261,7 @@ const AddProductForm = ({
                                     if (!prev) return null;
                                     return {
                                       ...prev,
-                                      _id: prev._id,
-                                      productImage: null,
+                                      productImage: "",
                                     };
                                   });
                                 }}
@@ -325,4 +305,4 @@ const AddProductForm = ({
   );
 };
 
-export default AddProductForm;
+export default ManageProductForm;

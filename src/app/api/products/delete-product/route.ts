@@ -17,7 +17,6 @@ export const DELETE = async (request: NextRequest) => {
     const search = request.nextUrl.searchParams;
     const productId = search.get("productId");
     const res = await Products.findOneAndDelete({ _id: productId });
-    console.log({ res });
     if (res) {
       revalidatePath("/dashboard/admin/manage-product/update");
       return NextResponse.json({

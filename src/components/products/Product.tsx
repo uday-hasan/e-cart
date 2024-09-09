@@ -1,31 +1,30 @@
-"use client";
+import { ProductInterface } from "@/lib/database/db_model/product.models";
 import React, { useState } from "react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ProductInterface } from "@/lib/database/db_model/product.models";
+} from "../ui/collapsible";
 import { CldImage } from "next-cloudinary";
-import { ClipboardSignatureIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ProductCategory } from "@/constants";
+import { Button } from "../ui/button";
 import Link from "next/link";
-import DeleteButton from "./DeleteButton";
-import { ProductCategory } from "@/constants/index";
+import DeleteButton from "../dashboard/admin/DeleteButton";
 
-const Description = ({ product }: { product: ProductInterface }) => {
-  const [open, setOpen] = useState(false);
+const Product = ({ item }: { item: ProductInterface }) => {
   const {
     productName,
-    productImage,
     productCategory,
     productCompany,
     productDescription,
+    productImage,
     productPrice,
     productQuantity,
     minOrder,
     _id,
-  } = product;
+  } = item;
+  const [open, setOpen] = useState(false);
+
   return (
     <Collapsible
       onOpenChange={(value) => setOpen(value)}
@@ -44,7 +43,7 @@ const Description = ({ product }: { product: ProductInterface }) => {
       </div>
       <h1 className="font-bold text-lg">Name: {productName}</h1>
       <h1 className="font-semibold text-base">
-        Product Category:{" "}
+        Product Category:
         {ProductCategory[productCategory as keyof typeof ProductCategory]}
       </h1>
       <h1 className="font-semibold text-base">
@@ -98,4 +97,4 @@ const Description = ({ product }: { product: ProductInterface }) => {
   );
 };
 
-export default Description;
+export default Product;

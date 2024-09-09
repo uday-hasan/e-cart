@@ -1,6 +1,6 @@
 "use client";
 import Description from "@/components/dashboard/admin/Description";
-import AddProductForm from "@/components/forms/AddProductForm";
+import ManageProductForm from "@/components/forms/ManageProductForm";
 import ProductSkeleton from "@/components/skeleton-loader/ProductSkeleton";
 import { ProductInterface } from "@/lib/database/db_model/product.models";
 import { useSearchParams } from "next/navigation";
@@ -35,11 +35,11 @@ const AddProductPage = ({
     <>
       {type === "add" ? (
         <div className="w-full px-4 md:w-1/2 mx-auto py-4 md:px-2 min-h-screen ">
-          <AddProductForm type={type} title={"Add new product"} />
+          <ManageProductForm type={type} title={"Add new product"} />
         </div>
       ) : search ? (
         <div className="w-full px-4 md:w-1/2 mx-auto py-4 md:px-2 min-h-screen ">
-          <AddProductForm
+          <ManageProductForm
             type={type}
             title={"Update a product"}
             productId={search!}

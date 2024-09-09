@@ -36,7 +36,7 @@ const ManageProduct = () => {
           <h1 className="text-xl font-semibold">Update Product</h1>
         </Link>
       </div>
-      {/* <AddProductForm /> */}
+      {/* <ManageProductForm /> */}
     </div>
   );
 };

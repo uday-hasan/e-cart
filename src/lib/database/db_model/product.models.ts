@@ -30,8 +30,9 @@ const schema = new Schema<ProductInterface>({
   productCategory: {
     type: String,
     required: true,
-    enum: ProductCategory,
-    default: ProductCategory[0],
+    enum: ["Shirt", "Pant", "TShirt", "Short"],
+    // enum: Object.keys(ProductCategory),
+    default: "Shirt",
   },
   productCompany: {
     type: String,
