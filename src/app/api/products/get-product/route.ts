@@ -14,14 +14,22 @@ export const GET = async (request: NextRequest) => {
     }
     const limit = req.get("limit");
     const skip = req.get("skip");
+    const hasSort = req.has("sort");
+    const sortValue = Number(req.get("sort"));
+    const sortQuery: { [key: string]: 1 | -1 } | { $natural: 1 } =
+      req.has("sort") && (sortValue === 1 || sortValue === -1)
+        ? { productPrice: sortValue as 1 | -1 }
+        : { $natural: 1 };
     const productCategory = req.has("category") && req.getAll("category");
     const res = productCategory
       ? await Products.find({ productCategory })
           .limit(Number(limit))
           .skip(Number(skip) || 0)
+          .sort(sortQuery)
       : await Products.find({})
           .limit(Number(limit))
-          .skip(Number(skip) || 0);
+          .skip(Number(skip) || 0)
+          .sort(sortQuery);
 
     const count = productCategory
       ? await Products.find({ productCategory }).countDocuments()

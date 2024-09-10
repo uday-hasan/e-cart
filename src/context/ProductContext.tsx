@@ -29,6 +29,8 @@ type ContextProviderType = {
   productPerPage: number;
   categories: string[] | [];
   setCategories: Dispatch<SetStateAction<string[] | []>>;
+  sort: number;
+  setSort: Dispatch<SetStateAction<number>>;
 };
 
 const defaultContextValue = {
@@ -43,6 +45,8 @@ const defaultContextValue = {
   productPerPage: 0,
   categories: [],
   setCategories: () => {},
+  sort: 0,
+  setSort: () => {},
 };
 
 const ContextProvider = createContext<ContextProviderType>(defaultContextValue);
@@ -53,6 +57,7 @@ const ProductContext = ({ children }: { children: React.ReactNode }) => {
   const [products, setProducts] = useState<ProductInterface[] | []>([]);
   const [loading, setLoading] = useState(false);
   const [productsCount, setProductsCount] = useState(0);
+  const [sort, setSort] = useState(0);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const productPerPage = 3;
@@ -165,8 +170,10 @@ const ProductContext = ({ children }: { children: React.ReactNode }) => {
         const many = setParams;
         many.delete("page");
         const categoryQuery = many.has("category") ? `&${many.toString()}` : "";
+        // const applySort = sort === 1 || sort === -1 ? `&sort=${sort}` : "";
+        // console.log({ sort, applySort });
         const res = await fetch(
-          `/api/products/get-product?limit=${productPerPage}&skip=${calcSkip}${categoryQuery}`
+          `/api/products/get-product?limit=${productPerPage}&skip=${calcSkip}${categoryQuery}&sort=${sort}`
         );
         const { products: dt, count } = await res.json();
         setProducts(dt);
@@ -176,7 +183,7 @@ const ProductContext = ({ children }: { children: React.ReactNode }) => {
         setLoading(false);
       }
     })();
-  }, [pageNumber, categories]);
+  }, [pageNumber, categories, sort]);
 
   const value = {
     products,
@@ -190,6 +197,8 @@ const ProductContext = ({ children }: { children: React.ReactNode }) => {
     productPerPage,
     categories,
     setCategories,
+    sort,
+    setSort,
   };
   return (
     <ContextProvider.Provider value={value}>

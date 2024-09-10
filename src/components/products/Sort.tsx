@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Select,
@@ -8,9 +9,16 @@ import {
 } from "@/components/ui/select";
 
 import { SortItems } from "@/constants";
+import { useProductContext } from "@/context/ProductContext";
+import { Button } from "../ui/button";
 const Sort = () => {
+  const { setSort } = useProductContext();
   return (
-    <Select>
+    <Select
+      onValueChange={(item) =>
+        setSort(SortItems[item as keyof typeof SortItems])
+      }
+    >
       <SelectTrigger className="flex justify-end w-32">
         <SelectValue placeholder="Sort" />
       </SelectTrigger>

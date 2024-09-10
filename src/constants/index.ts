@@ -35,7 +35,7 @@ export const ProductCategory = {
 } as const;
 
 export const SortItems = {
-  None: "None",
-  Asc: "Asc",
-  Dec: "Dec",
+  Default: 0,
+  Asc: 1,
+  Dec: -1,
 } as const;
