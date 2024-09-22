@@ -44,7 +44,7 @@ const useOrders = ({
         setLoadMore(false);
       }
     })();
-  }, [url, role, skip]);
+  }, [url, role, skip, limit]);
   const sum = orders.reduce((acc, cur) => {
     return acc + cur.amount;
   }, 0);

@@ -26,7 +26,7 @@ const Products = () => {
               Showing:{" "}
               {categories.length
                 ? categories.map((item, index) => (
-                    <span>
+                    <span key={index}>
                       {
                         ProductCategory[item as keyof typeof ProductCategory]
                           .title

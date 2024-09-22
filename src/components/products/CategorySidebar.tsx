@@ -20,7 +20,7 @@ const CategorySidebar = () => {
         return [...prev, ...updatedCategories];
       });
     }
-  }, []);
+  }, [categoryList, setCategories]);
   const handleCheckedChanged = (checked: boolean, item: string) => {
     setCategories((prev) => {
       if (checked) {

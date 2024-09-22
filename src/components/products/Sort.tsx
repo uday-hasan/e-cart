@@ -23,8 +23,10 @@ const Sort = () => {
         <SelectValue placeholder="Sort" />
       </SelectTrigger>
       <SelectContent>
-        {Object.keys(SortItems).map((item) => (
-          <SelectItem value={item}>{item}</SelectItem>
+        {Object.keys(SortItems).map((item, idx) => (
+          <SelectItem value={item} key={idx}>
+            {item}
+          </SelectItem>
         ))}
       </SelectContent>
     </Select>

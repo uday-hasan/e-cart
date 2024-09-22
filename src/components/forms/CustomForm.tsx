@@ -62,8 +62,8 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
           </FormControl>
 
           <SelectContent className="bg-background border p-2">
-            {Object.keys(selectItems!).map((key) => (
-              <SelectItem value={key}>
+            {Object.keys(selectItems!).map((key, idx) => (
+              <SelectItem value={key} key={idx}>
                 {selectItems && selectItems[key].title}
               </SelectItem>
             ))}

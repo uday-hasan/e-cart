@@ -59,7 +59,15 @@ const useProducts = ({ productPerPage = 6 }: { productPerPage?: number }) => {
         setLoading(false);
       }
     })();
-  }, [pageNumber, categories, sort, productPerPage]);
+  }, [
+    pageNumber,
+    categories,
+    sort,
+    productPerPage,
+    pathname,
+    router,
+    searchParams,
+  ]);
 
   return {
     products,

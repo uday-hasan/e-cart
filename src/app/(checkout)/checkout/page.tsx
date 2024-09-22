@@ -34,7 +34,7 @@ const Checkout = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [sum]);
   const appearance: Appearance = {
     theme: "night",
   };

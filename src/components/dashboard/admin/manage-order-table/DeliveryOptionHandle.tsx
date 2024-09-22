@@ -92,13 +92,11 @@ const DeliveryOptionHandle = ({
             <AlertDialogTitle className="font-light text-base">
               {paymentStatus === "Paid" ? (
                 cur === "Canceled" || cur === "Pending" ? (
-                  <p>
-                    "Payment is completed, are you sure to cancel the order?"
-                  </p>
+                  <p>Payment is completed, are you sure to cancel the order?</p>
                 ) : (
                   <p>
-                    Are you sure to change delivery status from{" "}
-                    <span className="underline">{state}</span> to{" "}
+                    Are you sure to change delivery status from
+                    <span className="underline">{state}</span> to
                     <span className="underline">{cur}</span>
                   </p>
                 )
