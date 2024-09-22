@@ -32,7 +32,7 @@ const Banner = () => {
     });
   }, []);
   return (
-    <section className="flex justify-evenly p-10  overflow-x-hidden min-h-screen items-center">
+    <section className="flex flex-col md:flex-row justify-evenly p-10  overflow-x-hidden min-h-screen items-center">
       <div className="flex flex-col  flex-1  items-end justify-center pr-10">
         <h1 className="text-3xl font-bold">
           <span id="banner-text-1" className="opacity-0 relative top-20">
