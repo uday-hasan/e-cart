@@ -66,11 +66,11 @@ const DeleteButton = ({ productId }: { productId: string }) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure to delete this product?
+            {`Are you sure to delete this product?`}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            After delete, you can add this product fron begin, but can't
-            retrive.
+            {`After delete, you can add this product fron begin, but can't
+              retrive.`}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
