@@ -1,6 +1,6 @@
 "use client";
 import { navigationItems } from "@/constants";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavItem from "./NavItem";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +18,13 @@ import { Loader } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Dashboard from "../dashboard/Dashboard";
+import { Dancing_Script } from "next/font/google";
 
+const font = Dancing_Script({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-dance",
+});
 const Navbar = () => {
   const timeline = gsap.timeline();
   useGSAP(() => {
@@ -55,17 +61,15 @@ const Navbar = () => {
   return (
     <header
       id="navigation_bar"
-      className="  border-2 flex justify-around  px-8 py-4 items-center sm:items-start sticky top-0 z-[1000]"
+      className={` shadow-sm shadow-foreground flex justify-around  px-8 py-4 items-center sm:items-start sticky top-0 z-[1000] transition-all duration-300  bg-background `}
     >
       {/*  Site Name with Link to home page*/}
       <section id="nav-sec-title" className="opacity-0">
-        <Button asChild variant={"outline"}>
-          <Link href={"/"} className="text-base">
-            <h1>
-              Make your <span className="section_title ">DRONE</span>
-            </h1>
-          </Link>
-        </Button>
+        <Link href={"/"} className={` min-w-44 ${font.className}  font-bold`}>
+          <Button className="text-xl" variant={"outline"}>
+            E CART
+          </Button>
+        </Link>
       </section>
 
       <nav className="gap-4 hidden sm:flex">
@@ -87,10 +91,6 @@ const Navbar = () => {
             <div className="flex gap-4 ">
               <Button variant={"outline"}>
                 <SignInButton></SignInButton>
-              </Button>
-
-              <Button>
-                <SignOutButton />
               </Button>
             </div>
           </SignedOut>

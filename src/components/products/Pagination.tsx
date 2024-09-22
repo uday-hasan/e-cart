@@ -12,9 +12,13 @@ import {
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useProductContext } from "@/context/ProductContext";
+import { useSearchParams } from "next/navigation";
+import useProducts from "@/hooks/useProducts";
 const PaginationPage = () => {
-  const { productsCount, productPerPage } = useProductContext();
+  const { productsCount, productPerPage } = useProducts({});
   const totalPages = Math.ceil((productsCount || 0) / (productPerPage || 1));
+  const searchParams = useSearchParams();
+  const cur = Number(searchParams.get("page")) || 1;
   return (
     <>
       {productsCount > productPerPage && (
@@ -22,8 +26,16 @@ const PaginationPage = () => {
           <PaginationContent>
             {[...Array(totalPages)].map((_, item) => (
               <PaginationItem key={item}>
-                <Button variant={"outline"} asChild>
-                  <Link href={`/products?page=${item + 1}`}>{item + 1}</Link>
+                <Button
+                  variant={"outline"}
+                  asChild
+                  className={`${
+                    Number(Number(item) + 1) === cur ? "bg-primary" : ""
+                  }`}
+                >
+                  <Link href={`/products?page=${Number(Number(item) + 1)}`}>
+                    {Number(Number(item) + 1)}
+                  </Link>
                 </Button>
               </PaginationItem>
             ))}

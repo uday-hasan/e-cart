@@ -22,7 +22,7 @@ export const createUser = async ({
       user: newUser,
     };
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 };
 
@@ -32,6 +32,6 @@ export const getUser = async (clerkId: string) => {
     const user = await User.findOne({ clerkId });
     return JSON.parse(JSON.stringify(user));
   } catch (errorMM) {
-    console.log({ errorMM });
+    console.error({ errorMM });
   }
 };

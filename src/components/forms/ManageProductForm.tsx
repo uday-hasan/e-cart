@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import CustomForm from "./CustomForm";
-import { FormFieldType } from "../dashboard/admin/AddProduct";
+import { FormFieldType } from "@/constants/index";
 import { ProductCategory } from "@/constants";
 import Image from "next/image";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
@@ -22,6 +22,7 @@ import { ProductInterface } from "@/lib/database/db_model/product.models";
 import { productFormSchema } from "@/lib/zod-schema/productFormSchema";
 import { useRouter } from "next/navigation";
 import { useProductContext } from "@/context/ProductContext";
+import Link from "next/link";
 
 interface ImageInfo {
   asset_folder: string;
@@ -70,15 +71,14 @@ const ManageProductForm = ({
         setLoading(true);
         try {
           const res = await fetch(
-            `http://localhost:3000/api/products/get-product/?product-id=${productId}`
+            `/api/products/get-product/?product-id=${productId}`
           );
           const { products } = await res.json();
           if (products) {
             setProduct(products);
             const updatedValues = {
               productName: products.productName,
-              productCategory:
-                products.productCategory as keyof typeof ProductCategory,
+              productCategory: products.productCategory,
               productQuantity: products.productQuantity,
               productPrice: products.productPrice,
               productCompany: products.productCompany,
@@ -87,6 +87,7 @@ const ManageProductForm = ({
               productDescription: products.productDescription,
             };
             setInitialValue(updatedValues);
+
             reset(updatedValues);
             setImage({
               public_id: products.public_id,
@@ -98,7 +99,7 @@ const ManageProductForm = ({
             });
           }
         } catch (error) {
-          console.log({ e: error });
+          console.error({ e: error });
         } finally {
           setLoading(false);
         }
@@ -112,7 +113,7 @@ const ManageProductForm = ({
       if (type === "update") {
         const data = await updateProduct(productId!, values);
         if (data.success && !loading) {
-          router.push(`/dashboard/admin/manage-product/update`);
+          router.push(`/products`);
           toast.success(data.message, {
             autoClose: 7000,
           });
@@ -140,167 +141,166 @@ const ManageProductForm = ({
       toast.success("Something went wrong", {
         autoClose: 7000,
       });
-      console.log({ error });
+      console.error({ error });
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div>
+    <div className="bg-primary px-8 py-6 rounded-lg">
       <h1 className="text-2xl font-semibold my-4">{title}</h1>
-      {loading ? (
-        <h1>Loading... </h1>
-      ) : (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmitHandler)}
-            className="flex flex-col gap-4 overflow-auto"
-          >
-            <CustomForm
-              name="productName"
-              label="Product Name"
-              control={form.control}
-              placeholder="Product Name"
-              fieldType={FormFieldType.TEXT}
-            />
-            <CustomForm
-              name="productCategory"
-              control={form.control}
-              label="Select Product Category"
-              fieldType={FormFieldType.SELECT}
-              selectItems={ProductCategory}
-            />
-            <CustomForm
-              name="productPrice"
-              label="Product Price"
-              placeholder="Product Price"
-              control={form.control}
-              fieldType={FormFieldType.NUMBER}
-            />
-            <CustomForm
-              name="productQuantity"
-              label="Product Quantity"
-              placeholder="Product Quantity"
-              control={form.control}
-              fieldType={FormFieldType.NUMBER}
-            />
-            <CustomForm
-              name="minOrder"
-              label="Minimum Order"
-              placeholder="Minimum Order"
-              control={form.control}
-              fieldType={FormFieldType.NUMBER}
-            />
-            <CustomForm
-              name="productCompany"
-              label="Product Company"
-              placeholder="Product Company"
-              control={form.control}
-              fieldType={FormFieldType.TEXT}
-            />
-            <CustomForm
-              name="productDescription"
-              label="Product Description"
-              placeholder="Product Description"
-              control={form.control}
-              fieldType={FormFieldType.TEXTAREA}
-            />
-            <FormField
-              name="productImage"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <CldUploadWidget
-                      uploadPreset="make-your-drone"
-                      options={{ multiple: false }}
-                      onSuccess={(results: any) => {
-                        if (results.event === "success") {
-                          if (results.info.bytes > 1000000) {
-                            toast.error("Image must be less than or equal 1MB");
-                            return;
-                          }
-                          const validFormats = ["jpg", "png", "jpeg"];
-                          if (!validFormats.includes(results.info.format)) {
-                            toast.error(
-                              "Format must be 'jpg', 'png', or 'jpeg'"
-                            );
-                            return;
-                          }
-                          setImage(results?.info);
-                          field.onChange(results?.info?.public_id);
-                        }
-                      }}
-                      onError={(error) => {
-                        console.log(error);
-                      }}
-                      onQueuesEnd={(result, { widget }) => {
-                        if (image) {
-                          widget.close();
-                        }
-                      }}
-                    >
-                      {({ open }) => (
-                        <>
-                          {image?.public_id || product?.productImage ? (
-                            <>
-                              <CldImage
-                                src={
-                                  image?.public_id! || product?.productImage!
-                                }
-                                alt="Image"
-                                width={400}
-                                height={400}
-                              />
-                              <Button
-                                variant={"outline"}
-                                onClick={() => {
-                                  setImage(null);
-                                  setProduct((prev) => {
-                                    if (!prev) return null;
-                                    return {
-                                      ...prev,
-                                      productImage: "",
-                                    };
-                                  });
-                                }}
-                              >
-                                Click to remove image
-                              </Button>
-                            </>
-                          ) : (
-                            <div
-                              className="border border-primary rounded-md py-4 cursor-pointer flex flex-col items-center justify-center gap-2"
-                              onClick={() => open()}
-                            >
-                              <p className="text-xl font-medium ">
-                                Click to upload
-                              </p>
-                              <Image
-                                src={"/assets/icons/upload.svg"}
-                                alt="Upload Icon"
-                                width={30}
-                                height={30}
-                                className="invert-[.70]"
-                              />
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </CldUploadWidget>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
-            <Button type="submit" disabled={loading}>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmitHandler)}
+          className="flex flex-col gap-4 overflow-auto "
+        >
+          <CustomForm
+            name="productName"
+            label="Product Name"
+            control={form.control}
+            placeholder="Product Name"
+            fieldType={FormFieldType.TEXT}
+          />
+          <CustomForm
+            name="productCategory"
+            control={form.control}
+            label="Select Product Category"
+            fieldType={FormFieldType.SELECT}
+            selectItems={ProductCategory}
+          />
+          <CustomForm
+            name="productPrice"
+            label="Product Price"
+            placeholder="Product Price"
+            control={form.control}
+            fieldType={FormFieldType.NUMBER}
+          />
+          <CustomForm
+            name="productQuantity"
+            label="Product Quantity"
+            placeholder="Product Quantity"
+            control={form.control}
+            fieldType={FormFieldType.NUMBER}
+          />
+          <CustomForm
+            name="minOrder"
+            label="Minimum Order"
+            placeholder="Minimum Order"
+            control={form.control}
+            fieldType={FormFieldType.NUMBER}
+          />
+          <CustomForm
+            name="productCompany"
+            label="Product Company"
+            placeholder="Product Company"
+            control={form.control}
+            fieldType={FormFieldType.TEXT}
+          />
+          <CustomForm
+            name="productDescription"
+            label="Product Description"
+            placeholder="Product Description"
+            control={form.control}
+            fieldType={FormFieldType.TEXTAREA}
+          />
+          <FormField
+            name="productImage"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem className="bg-background">
+                <FormControl>
+                  <CldUploadWidget
+                    uploadPreset="make-your-drone"
+                    options={{ multiple: false }}
+                    onSuccess={(results: any) => {
+                      if (results.event === "success") {
+                        if (results.info.bytes > 1000000) {
+                          toast.error("Image must be less than or equal 1MB");
+                          return;
+                        }
+                        const validFormats = ["jpg", "png", "jpeg"];
+                        if (!validFormats.includes(results.info.format)) {
+                          toast.error("Format must be 'jpg', 'png', or 'jpeg'");
+                          return;
+                        }
+                        setImage(results?.info);
+                        field.onChange(results?.info?.public_id);
+                      }
+                    }}
+                    onError={(error) => {
+                      console.error(error);
+                    }}
+                    onQueuesEnd={(result, { widget }) => {
+                      if (image) {
+                        widget.close();
+                      }
+                    }}
+                  >
+                    {({ open }) => (
+                      <>
+                        {image?.public_id || product?.productImage ? (
+                          <>
+                            <CldImage
+                              src={image?.public_id! || product?.productImage!}
+                              alt="Image"
+                              width={400}
+                              height={400}
+                              crop={"fill"}
+                            />
+                            <Button
+                              variant={"outline"}
+                              onClick={() => {
+                                setImage(null);
+                                setProduct((prev) => {
+                                  if (!prev) return null;
+                                  return {
+                                    ...prev,
+                                    productImage: "",
+                                  };
+                                });
+                              }}
+                            >
+                              Click to remove image
+                            </Button>
+                          </>
+                        ) : (
+                          <div
+                            className="border border-primary rounded-md py-4 cursor-pointer flex flex-col items-center justify-center gap-2"
+                            onClick={() => open()}
+                          >
+                            <p className="text-xl font-medium ">
+                              Click to upload
+                            </p>
+                            <Image
+                              src={"/assets/icons/upload.svg"}
+                              alt="Upload Icon"
+                              width={30}
+                              height={30}
+                              className="invert-[.70]"
+                            />
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </CldUploadWidget>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex justify-center gap-3">
+            <Button variant={"outline"} type="submit" disabled={loading}>
               {loading ? "Submitting" : "Submit"}
             </Button>
-          </form>
-        </Form>
-      )}
+            <Button variant={"outline"} className="bg-primary/60" type="button">
+              <Link href={"/dashboard/admin/manage-product"}>Cancel</Link>
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };

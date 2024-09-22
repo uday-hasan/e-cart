@@ -14,7 +14,7 @@ const MobileNav = () => {
       <SheetTrigger>
         <AlignJustify />
       </SheetTrigger>
-      <SheetContent className="max-w-[200px] flex flex-col justify-between">
+      <SheetContent className="max-w-[200px] flex flex-col justify-between z-[10000]">
         <nav className="flex flex-col gap-4">
           {navigationItems.map((item) => (
             <div key={item.href} className="flex flex-col ">

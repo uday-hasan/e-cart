@@ -3,7 +3,6 @@ import { ProductCategory } from "@/constants";
 import { ProductInterface } from "@/lib/database/db_model/product.models";
 import { productFormSchema } from "@/lib/zod-schema/productFormSchema";
 import { get } from "http";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, {
   createContext,
   Dispatch,
@@ -15,8 +14,6 @@ import React, {
 import { z } from "zod";
 
 type ContextProviderType = {
-  products: ProductInterface[] | [];
-  setProducts: Dispatch<SetStateAction<ProductInterface[] | []>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
   createProduct: (data: productFormSchema) => Promise<any | undefined>;
@@ -34,8 +31,6 @@ type ContextProviderType = {
 };
 
 const defaultContextValue = {
-  products: [],
-  setProducts: () => {},
   loading: false,
   setLoading: () => {},
   createProduct: () => Promise.resolve(undefined),
@@ -58,13 +53,7 @@ const ProductContext = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [productsCount, setProductsCount] = useState(0);
   const [sort, setSort] = useState(0);
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const productPerPage = 3;
-  const router = useRouter();
-  const [pageNumber, setPageNumber] = useState(
-    Number(searchParams.get("page")) || 1
-  );
+  const productPerPage = 6;
   const [categories, setCategories] = useState<string[]>([]);
 
   // Create product logic
@@ -131,63 +120,13 @@ const ProductContext = ({ children }: { children: React.ReactNode }) => {
       setProducts(products.filter((p) => String(p._id) !== productId));
       return data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Page number change login
-  useEffect(() => {
-    const page = Number(searchParams.get("page"));
-    setPageNumber(page);
-  }, [searchParams]);
-
-  // Pagination and category changing logic
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      try {
-        const setParams = new URLSearchParams(searchParams.toString());
-        const getCategory = searchParams.getAll("category");
-        getCategory.length &&
-          getCategory.forEach((item) => {
-            categories &&
-              !categories.includes(item) &&
-              setParams.delete("category", item);
-          });
-
-        categories &&
-          categories.length &&
-          categories.forEach((item) => {
-            if (!getCategory.includes(item)) {
-              setParams.append("category", item);
-            }
-          });
-        router.push(pathname + "?" + setParams.toString());
-
-        const calcSkip = pageNumber * productPerPage - productPerPage || 0;
-        const many = setParams;
-        many.delete("page");
-        const categoryQuery = many.has("category") ? `&${many.toString()}` : "";
-        // const applySort = sort === 1 || sort === -1 ? `&sort=${sort}` : "";
-        // console.log({ sort, applySort });
-        const res = await fetch(
-          `/api/products/get-product?limit=${productPerPage}&skip=${calcSkip}${categoryQuery}&sort=${sort}`
-        );
-        const { products: dt, count } = await res.json();
-        setProducts(dt);
-        setProductsCount(Number(count));
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [pageNumber, categories, sort]);
-
   const value = {
-    products,
-    setProducts,
     loading,
     setLoading,
     createProduct,

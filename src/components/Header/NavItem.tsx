@@ -9,7 +9,8 @@ const NavItem = ({ item }: { item: { title: string; href: string } }) => {
     <Link
       href={item.href}
       className={`${
-        pathName === item.href && "text-primary"
+        pathName === item.href &&
+        "text-primary-foreground border-b border-b-primary-foreground "
       } sm:opacity-0 nav-item-sta`}
     >
       {item.title}

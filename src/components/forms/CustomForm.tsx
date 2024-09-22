@@ -10,7 +10,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Control } from "react-hook-form";
-import { FormFieldType } from "../dashboard/admin/AddProduct";
+
 import {
   Select,
   SelectGroup,
@@ -22,6 +22,7 @@ import {
 import { z } from "zod";
 import { Textarea } from "../ui/textarea";
 import { productFormSchema } from "@/lib/zod-schema/productFormSchema";
+import { FormFieldType } from "@/constants";
 
 interface Props {
   name: keyof z.infer<typeof productFormSchema>;
@@ -30,7 +31,7 @@ interface Props {
   control: Control<any>;
   fieldType: FormFieldType;
   placeholder?: string;
-  selectItems?: { [key: string]: string };
+  selectItems?: { [key: string]: { title: string; path: string } };
 }
 
 const RenderField = ({ field, props }: { field: any; props: Props }) => {
@@ -49,7 +50,11 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
       );
     case FormFieldType.SELECT:
       return (
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <Select
+          onValueChange={field.onChange}
+          defaultValue={field.value}
+          value={field.value}
+        >
           <FormControl>
             <SelectTrigger>
               <SelectValue placeholder={placeholder} />
@@ -59,7 +64,7 @@ const RenderField = ({ field, props }: { field: any; props: Props }) => {
           <SelectContent className="bg-background border p-2">
             {Object.keys(selectItems!).map((key) => (
               <SelectItem value={key}>
-                {selectItems && selectItems[key]}
+                {selectItems && selectItems[key].title}
               </SelectItem>
             ))}
           </SelectContent>

@@ -20,16 +20,14 @@ export const POST = async (req: Request, res: Response) => {
       author: new Types.ObjectId(sessionClaims.userId as string),
     };
 
-    console.log(data);
     const add = await Products.create(data);
-    console.log(add);
     return NextResponse.json({
       data: add,
       message: "Product added successfully",
       success: true,
     });
   } catch (error) {
-    console.log({ errorRouteAddProduct: error });
+    console.error({ errorRouteAddProduct: error });
     return NextResponse.json({ error });
   }
 };

@@ -7,7 +7,6 @@ import { NextRequest, NextResponse } from "next/server";
 export const PUT = async (request: NextRequest) => {
   try {
     const { sessionClaims } = auth();
-    console.log(sessionClaims);
     if (!sessionClaims || !sessionClaims.isAdmin) {
       return NextResponse.json({
         message: "Unauthorized or admin not found",

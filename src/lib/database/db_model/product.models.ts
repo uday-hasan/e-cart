@@ -14,50 +14,53 @@ export interface ProductInterface extends Document {
   author: Schema.Types.ObjectId;
 }
 
-const schema = new Schema<ProductInterface>({
-  productName: {
-    type: String,
-    required: true,
+const schema = new Schema<ProductInterface>(
+  {
+    productName: {
+      type: String,
+      required: true,
+    },
+    productImage: {
+      type: String,
+      required: true,
+    },
+    productDescription: {
+      type: String,
+      required: true,
+    },
+    productCategory: {
+      type: String,
+      required: true,
+      enum: ["Shirt", "Pant", "TShirt", "Watch"],
+      // enum: Object.keys(ProductCategory),
+      default: "Shirt",
+    },
+    productCompany: {
+      type: String,
+      required: true,
+    },
+    productQuantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    minOrder: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    productPrice: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
   },
-  productImage: {
-    type: String,
-    required: true,
-  },
-  productDescription: {
-    type: String,
-    required: true,
-  },
-  productCategory: {
-    type: String,
-    required: true,
-    enum: ["Shirt", "Pant", "TShirt", "Short"],
-    // enum: Object.keys(ProductCategory),
-    default: "Shirt",
-  },
-  productCompany: {
-    type: String,
-    required: true,
-  },
-  productQuantity: {
-    type: Number,
-    required: true,
-    min: 1,
-  },
-  minOrder: {
-    type: Number,
-    required: true,
-    min: 1,
-  },
-  productPrice: {
-    type: Number,
-    required: true,
-    min: 1,
-  },
-  author: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
-});
+  { timestamps: true }
+);
 
 export const Products = models.Product || model("Product", schema);

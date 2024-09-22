@@ -10,8 +10,10 @@ import { ProductCategory } from "@/constants";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import DeleteButton from "../dashboard/admin/DeleteButton";
+import { useAuth, useUser } from "@clerk/nextjs";
+import ProductModal from "./ProductModal";
 
-const Product = ({ item }: { item: ProductInterface }) => {
+const Product = ({ item, from }: { item: ProductInterface; from: string }) => {
   const {
     productName,
     productCategory,
@@ -22,8 +24,11 @@ const Product = ({ item }: { item: ProductInterface }) => {
     productQuantity,
     minOrder,
     _id,
+    author,
   } = item;
   const [open, setOpen] = useState(false);
+  const { user } = useUser();
+  const isAdmin = user && user.publicMetadata.isAdmin;
 
   return (
     <Collapsible
@@ -44,7 +49,10 @@ const Product = ({ item }: { item: ProductInterface }) => {
       <h1 className="font-bold text-lg">Name: {productName}</h1>
       <h1 className="font-semibold text-base">
         Product Category:
-        {ProductCategory[productCategory as keyof typeof ProductCategory]}
+        {
+          ProductCategory[productCategory as keyof typeof ProductCategory]
+            ?.title
+        }
       </h1>
       <h1 className="font-semibold text-base">
         Product Price: ${productPrice}
@@ -54,6 +62,7 @@ const Product = ({ item }: { item: ProductInterface }) => {
       </h1>
       <h1 className="font-semibold text-base">Minimum Order: {minOrder}</h1>
       <h1 className="font-semibold text-base">Brand: {productCompany}</h1>
+      <h1 className="font-semibold text-base">Author: {String(author)}</h1>
 
       <p>
         {productDescription.length >= 15
@@ -83,16 +92,23 @@ const Product = ({ item }: { item: ProductInterface }) => {
           </p>
         </CollapsibleContent>
       )}
-      <div className="space-x-4">
-        <Button variant={"outline"} asChild>
-          <Link
-            href={`/dashboard/admin/manage-product/update?product-id=${_id}`}
-          >
-            Update
-          </Link>
-        </Button>
-        <DeleteButton productId={String(_id)} />
-      </div>
+
+      {isAdmin ? (
+        <div className="space-x-2">
+          <Button variant={"outline"} asChild>
+            <Link
+              href={`/dashboard/admin/manage-product/update?product-id=${_id}`}
+            >
+              Update
+            </Link>
+          </Button>
+          <DeleteButton productId={String(_id)} />
+        </div>
+      ) : (
+        <div>
+          <ProductModal item={item} />
+        </div>
+      )}
     </Collapsible>
   );
 };

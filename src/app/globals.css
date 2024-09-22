@@ -29,14 +29,19 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    /* --error: 27 87% 67%; */
+    
   }
 
   .dark {
-    /* --background: 222.2 84% 4.9%; */
-    --background: 0 15% 11%; /* Main Background*/
-    --foreground: 0 6% 77%;  /* Main Text */
-    --primary: 234 55% 69%;  /*Button Default BG*/
-    --primary-foreground: 0 0% 99.02%; /*Button Default Text*/
+    --background: 180 34% 16%; /* Main Background*/
+    /* --foreground: 36 43% 72%;  Main Text */
+    --foreground: 210 12.6% 50%;  /* Main Text */
+
+    /* --primary: 234 55% 69%;  Button Default BG */
+    --primary: 158 13% 29%;  /*Button Default BG*/
+    --primary-foreground: 180 100% 50%; /*Button Default Text*/
+    /* --primary-foreground: 0 0% 99.02%; Button Default Text */
     
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -59,6 +64,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --error: 130 100% 52%;
   }
 }
 
@@ -70,8 +76,48 @@
     @apply bg-background text-foreground;
   }
   .section_title{
-    @apply font-semibold text-primary italic
+    @apply font-semibold text-primary-foreground italic
   }
 }
 
-/*  */
+.title-heading {
+  position: absolute;
+  padding: 4px;
+  background: linear-gradient(to right,
+        hsl(var(--foreground)),
+        hsl(var(--primary)),
+        hsl(var(--foreground)),
+          hsl(var(--primary)));
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right,
+      hsl(var(--primary)),
+      hsl(var(--foreground)), hsl(var(--primary)),
+      hsl(var(--foreground)));
+}
+.nav-heading {
+  position: absolute;
+  padding: 4px;
+  background: linear-gradient(to right,
+        hsl(var(--foreground)),
+        hsl(var(--primary)),
+        hsl(var(--foreground)),
+          hsl(var(--primary)));
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right,
+      hsl(var(--primary)),
+      hsl(var(--foreground)), hsl(var(--primary)),
+      hsl(var(--foreground))); */
+}
+.footer-heading{
+  border-bottom: 2px dashed hsl(var(--primary-foreground));
+  font-weight: bold;
+  font-style: italic;
+}

@@ -30,7 +30,7 @@ export const DELETE = async (request: NextRequest) => {
       success: false,
     });
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
     return NextResponse.json({
       message: "Something went wrong",
       success: false,

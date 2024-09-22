@@ -45,7 +45,7 @@ const Description = ({ product }: { product: ProductInterface }) => {
       <h1 className="font-bold text-lg">Name: {productName}</h1>
       <h1 className="font-semibold text-base">
         Product Category:{" "}
-        {ProductCategory[productCategory as keyof typeof ProductCategory]}
+        {ProductCategory[productCategory as keyof typeof ProductCategory].title}
       </h1>
       <h1 className="font-semibold text-base">
         Product Price: ${productPrice}
