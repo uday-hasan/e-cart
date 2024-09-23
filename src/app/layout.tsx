@@ -21,6 +21,7 @@ const font = Dancing_Script({
 });
 export const metadata: Metadata = {
   title: "E Cart",
+  icons: "fav.ico",
   description: "E Cart, a advanced simple ecommerece site",
 };
 
