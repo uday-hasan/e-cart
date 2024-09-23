@@ -10,7 +10,6 @@ import {
 
 import { SortItems } from "@/constants";
 import { useProductContext } from "@/context/ProductContext";
-import { Button } from "../ui/button";
 const Sort = () => {
   const { setSort } = useProductContext();
   return (

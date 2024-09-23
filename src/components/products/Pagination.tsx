@@ -15,10 +15,11 @@ import { useProductContext } from "@/context/ProductContext";
 import { useSearchParams } from "next/navigation";
 import useProducts from "@/hooks/useProducts";
 const PaginationPage = () => {
-  const { productsCount, productPerPage } = useProducts({});
+  const { productsCount, productPerPage } = useProductContext();
   const totalPages = Math.ceil((productsCount || 0) / (productPerPage || 1));
   const searchParams = useSearchParams();
   const cur = Number(searchParams.get("page")) || 1;
+
   return (
     <>
       {productsCount > productPerPage && (

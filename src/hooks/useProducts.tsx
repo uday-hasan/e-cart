@@ -64,9 +64,9 @@ const useProducts = ({ productPerPage = 6 }: { productPerPage?: number }) => {
     categories,
     sort,
     productPerPage,
-    pathname,
-    router,
-    searchParams,
+    // pathname,
+    // router,
+    // searchParams,
   ]);
 
   return {

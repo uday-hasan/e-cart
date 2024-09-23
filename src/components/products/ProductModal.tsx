@@ -98,8 +98,8 @@ const ProductModal = ({ item }: { item: ProductInterface }) => {
             <AlertDialogTitle>{productName} Details</AlertDialogTitle>
             <AlertDialogDescription>
               <div className="space-y-2 text-base font-semibold">
-                <h1>Minimum order: {minOrder}</h1>
-                <h1>Price(unit): ${productPrice}</h1>
+                <p>Minimum order: {minOrder}</p>
+                <p>Price(unit): ${productPrice}</p>
                 <div className="space-y-2">
                   <Label htmlFor="orderQuantity" className="font-semibold">
                     Order Quantity
@@ -122,7 +122,7 @@ const ProductModal = ({ item }: { item: ProductInterface }) => {
                     </p>
                   )}
                 </div>
-                <h1 className="font-bold">Total: ${newPrice}</h1>
+                <p className="font-bold">Total: ${newPrice}</p>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -46,23 +46,21 @@ const Product = ({ item, from }: { item: ProductInterface; from: string }) => {
           crop={"fill"}
         />
       </div>
-      <h1 className="font-bold text-lg">Name: {productName}</h1>
-      <h1 className="font-semibold text-base">
+      <p className="font-bold text-lg">Name: {productName}</p>
+      <p className="font-semibold text-base">
         Product Category:
         {
           ProductCategory[productCategory as keyof typeof ProductCategory]
             ?.title
         }
-      </h1>
-      <h1 className="font-semibold text-base">
-        Product Price: ${productPrice}
-      </h1>
-      <h1 className="font-semibold text-base">
+      </p>
+      <p className="font-semibold text-base">Product Price: ${productPrice}</p>
+      <p className="font-semibold text-base">
         Product Quantity: {productQuantity}
-      </h1>
-      <h1 className="font-semibold text-base">Minimum Order: {minOrder}</h1>
-      <h1 className="font-semibold text-base">Brand: {productCompany}</h1>
-      <h1 className="font-semibold text-base">Author: {String(author)}</h1>
+      </p>
+      <p className="font-semibold text-base">Minimum Order: {minOrder}</p>
+      <p className="font-semibold text-base">Brand: {productCompany}</p>
+      <p className="font-semibold text-base">Author: {String(author)}</p>
 
       <p>
         {productDescription.length >= 15

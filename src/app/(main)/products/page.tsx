@@ -9,11 +9,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ProductCategory } from "@/constants";
+import { useProductContext } from "@/context/ProductContext";
 import useProducts from "@/hooks/useProducts";
 import React from "react";
 
 const Products = () => {
-  const { categories, productsCount } = useProducts({ productPerPage: 6 });
+  const { categories, productsCount } = useProductContext();
   return (
     <section className="flex  w-full mt-4">
       <div className="flex-[1]  fixed z-50 h-screen min-w-[200px]   hidden md:flex">
