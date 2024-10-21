@@ -18,7 +18,7 @@ const Sort = () => {
         setSort(SortItems[item as keyof typeof SortItems])
       }
     >
-      <SelectTrigger className="flex justify-end w-32">
+      <SelectTrigger className="flex justify-end w-32 text-primary-foreground">
         <SelectValue placeholder="Sort" />
       </SelectTrigger>
       <SelectContent>

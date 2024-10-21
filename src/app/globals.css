@@ -34,8 +34,9 @@
   }
 
   .dark {
-    --background: 180 34% 16%; /* Main Background*/
+    /* --background: 180 34% 16%; Main Background */
     /* --foreground: 36 43% 72%;  Main Text */
+    --background: 0 29.03% 6.08%; /* Main Background*/
     --foreground: 210 12.6% 50%;  /* Main Text */
 
     /* --primary: 234 55% 69%;  Button Default BG */

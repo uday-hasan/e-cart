@@ -33,7 +33,7 @@ const Product = ({ item, from }: { item: ProductInterface; from: string }) => {
   return (
     <Collapsible
       onOpenChange={(value) => setOpen(value)}
-      className="flex flex-col p-4 gap-3  shadow-primary shadow-sm rounded-sm"
+      className="flex flex-col p-4 gap-3  shadow-primary shadow-sm rounded-sm text-primary-foreground"
     >
       <div>
         <CldImage
@@ -46,21 +46,21 @@ const Product = ({ item, from }: { item: ProductInterface; from: string }) => {
           crop={"fill"}
         />
       </div>
-      <p className="font-bold text-lg">Name: {productName}</p>
-      <p className="font-semibold text-base">
+      <p className="font-semibold text-base">Name: {productName}</p>
+      <p className="font-light text-base">
         Product Category:
         {
           ProductCategory[productCategory as keyof typeof ProductCategory]
             ?.title
         }
       </p>
-      <p className="font-semibold text-base">Product Price: ${productPrice}</p>
-      <p className="font-semibold text-base">
+      <p className="font-light text-base">Product Price: ${productPrice}</p>
+      <p className="font-light text-base">
         Product Quantity: {productQuantity}
       </p>
-      <p className="font-semibold text-base">Minimum Order: {minOrder}</p>
-      <p className="font-semibold text-base">Brand: {productCompany}</p>
-      <p className="font-semibold text-base">Author: {String(author)}</p>
+      <p className="font-light text-base">Minimum Order: {minOrder}</p>
+      <p className="font-light text-base">Brand: {productCompany}</p>
+      <p className="font-light text-base">Author: {String(author)}</p>
 
       <p>
         {productDescription.length >= 15
