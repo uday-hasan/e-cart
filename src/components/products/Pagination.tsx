@@ -31,7 +31,9 @@ const PaginationPage = () => {
                   variant={"outline"}
                   asChild
                   className={`${
-                    Number(Number(item) + 1) === cur ? "bg-primary" : ""
+                    Number(Number(item) + 1) === cur
+                      ? "bg-primary text-primary-foreground scale-105"
+                      : ""
                   }`}
                 >
                   <Link href={`/products?page=${Number(Number(item) + 1)}`}>

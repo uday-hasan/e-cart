@@ -33,7 +33,7 @@ const Product = ({ item, from }: { item: ProductInterface; from: string }) => {
   return (
     <Collapsible
       onOpenChange={(value) => setOpen(value)}
-      className="flex flex-col p-4 gap-3  shadow-primary shadow-sm rounded-sm text-primary-foreground"
+      className="flex flex-col p-4 gap-3  shadow-primary shadow-sm rounded-sm text-foreground"
     >
       <div>
         <CldImage

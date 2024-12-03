@@ -4,6 +4,7 @@ import {
   Luxurious_Roman,
   Raleway,
   Dancing_Script,
+  Lora,
 } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Header/Navbar";
@@ -13,7 +14,7 @@ import { dark } from "@clerk/themes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProductContext from "@/context/ProductContext";
-const inter = Raleway({ weight: ["400"], subsets: ["latin"] });
+const inter = Lora({ weight: ["400"], subsets: ["latin"] });
 const font = Dancing_Script({
   weight: ["400", "700"],
   subsets: ["latin"],

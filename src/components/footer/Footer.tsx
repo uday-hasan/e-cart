@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8  place-items-center py-7  bg-primary/30    ">
       <div className="flex flex-col gap-4 items-start">
         <h1>
-          <span className="footer-heading text-xl">E Cart</span>
+          <span className=" text-xl">E Cart</span>
         </h1>
         <FooterModal title="Privacy Policy" />
         <FooterModal title="Order Policy" />
@@ -21,7 +21,7 @@ const Footer = () => {
       </div>
       <div className="space-y-3">
         <h1>
-          <span className="footer-heading text-xl">Contact Information</span>
+          <span className=" text-xl">Contact Information</span>
         </h1>
         <p className="font-semibold text-sm">Email: ecart@test.com</p>
         <p className="font-semibold text-sm">Mobile: +123 456789</p>

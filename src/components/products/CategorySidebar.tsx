@@ -31,7 +31,8 @@ const CategorySidebar = () => {
     });
   };
   return (
-    <div>
+    <div className="p-2">
+      <h1 className="text-xl font-semibold">Select your options</h1>
       {Object.keys(ProductCategory).map((value) => {
         const item = value as string;
         return (
